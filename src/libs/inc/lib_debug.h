@@ -3,24 +3,24 @@
 #include <stdio.h>
 #include "includes.h"
 /******************************************* Enum ********************************************/
-/* debugµ÷ÊÔÊä³ö·½Ê½ */
+/* debugè°ƒè¯•è¾“å‡ºæ–¹å¼ */
 typedef enum {
-	INTERFACE_TYPE_CONSOLE = 0,								/* ÖÕ¶ËÊä³ö */
-	INTERFACE_TYPE_UART,									/* ´®¿ÚÊä³ö */
-	INTERFACE_TYPE_NET,										/* TCPÊä³ö   */
-	INTERFACE_TYPE_LOG,										/* ÈÕÖ¾ÎÄ¼ş´æ´¢ */
-	INTERFACE_TYPE_LCD,										/* lcdÆÁÊä³ö */
+	INTERFACE_TYPE_CONSOLE = 0,								/* ç»ˆç«¯è¾“å‡º */
+	INTERFACE_TYPE_UART,									/* ä¸²å£è¾“å‡º */
+	INTERFACE_TYPE_NET,										/* TCPè¾“å‡º   */
+	INTERFACE_TYPE_LOG,										/* æ—¥å¿—æ–‡ä»¶å­˜å‚¨ */
+	INTERFACE_TYPE_LCD,										/* lcdå±è¾“å‡º */
 	INTERFACE_TYPE_MAX
 }INTERFACE_TYPE_T;
 
-/* µ÷ÊÔ¿ª¹Ø */
+/* è°ƒè¯•å¼€å…³ */
 typedef enum {
 	DEBUG_SWITCH_CLOSE = 0,
 	DEBUG_SWITCH_OPEN
 }DEBUG_SWITCH_T;
 
 
-/* ´®¿ÚÆæÅ¼Ğ£Ñé */
+/* ä¸²å£å¥‡å¶æ ¡éªŒ */
 typedef enum {
     UART_DATABIT_5 = 5,
     UART_DATABIT_6,
@@ -28,20 +28,20 @@ typedef enum {
     UART_DATABIT_8
 }UART_DATABIT_T;
 
-/* ´®¿ÚÆæÅ¼Ğ£Ñé */
+/* ä¸²å£å¥‡å¶æ ¡éªŒ */
 typedef enum {
     UART_STOPBIT_1 = 1,
     UART_STOPBIT_2
 }UART_STOPBIT_T;
 
-/* ´®¿ÚÆæÅ¼Ğ£Ñé */
+/* ä¸²å£å¥‡å¶æ ¡éªŒ */
 typedef enum {
     UART_PARITY_NONE,
     UART_PARITY_ODD,
     UART_PARITY_EVEN
 }UART_PARITY_T;
 
-/* ´®¿ÚÁ÷¿Ø */
+/* ä¸²å£æµæ§ */
 typedef enum {
     UART_FLOWCTRL_NONE,
 	UART_FLOWCTRL_SOFT,
@@ -49,40 +49,40 @@ typedef enum {
 }UART_FLOWCTRL_T;
 
 /****************************************** Define *******************************************/
-#define MAX_DEV_MANE_SIZE		100							/* Éè±¸ÎÄ¼şÃû³¤¶È */
+#define MAX_DEV_MANE_SIZE		100							/* è®¾å¤‡æ–‡ä»¶åé•¿åº¦ */
 
 /****************************************** Struct *******************************************/
-/*uart ´®¿ÚĞÅÏ¢*/
+/*uart ä¸²å£ä¿¡æ¯*/
 typedef struct {
-	int 				uart_fd;							/* ´®¿Ú¾ä±ú */
-	char 				uart_name[MAX_DEV_MANE_SIZE];		/* ´®¿ÚÉè±¸Ãû */
-	unsigned int 		baudfate;							/* ²¨ÌØÂÊ */
-	unsigned char 		databits;							/* Êı¾İÎ» */
-	unsigned char		stopbits;							/* Í£Ö¹Î» */
-	UART_PARITY_T		parity;								/* ÆæÅ¼Ğ£Ñé:1-ÆæÊı,2-Å¼Êı */
-	UART_FLOWCTRL_T		flowctrl;							/* Á÷¿Ø:1-ÈíÁ÷¿Ø,   2-Ó²Á÷¿Ø      */
+	int 				uart_fd;							/* ä¸²å£å¥æŸ„ */
+	char 				uart_name[MAX_DEV_MANE_SIZE];		/* ä¸²å£è®¾å¤‡å */
+	unsigned int 		baudfate;							/* æ³¢ç‰¹ç‡ */
+	unsigned char 		databits;							/* æ•°æ®ä½ */
+	unsigned char		stopbits;							/* åœæ­¢ä½ */
+	UART_PARITY_T		parity;								/* å¥‡å¶æ ¡éªŒ:1-å¥‡æ•°,2-å¶æ•° */
+	UART_FLOWCTRL_T		flowctrl;							/* æµæ§:1-è½¯æµæ§,   2-ç¡¬æµæ§      */
 }DEBUG_UART_INFO;
 
-/*tcp ÍøÂçĞÅÏ¢*/
+/*tcp ç½‘ç»œä¿¡æ¯*/
 typedef struct {
 	int 	net_fd;
 	bool 	(*Debug_Net_Interface)(char *debug_buf, unsigned int buf_len);
 }DEBUG_NET_INFO;
 
-/*file ÎÄ¼şÈÕÖ¾ĞÅÏ¢*/
+/*file æ–‡ä»¶æ—¥å¿—ä¿¡æ¯*/
 typedef struct {
 	FILE * 				log_fd;
 	char 				log_name[MAX_DEV_MANE_SIZE];
 	unsigned int 		max_log_size;
 }DEBUG_LOG_INFO;
 
-/*tcp ÍøÂçĞÅÏ¢*/
+/*tcp ç½‘ç»œä¿¡æ¯*/
 typedef struct {
 	int 	lcd_fd;
 	bool 	(*Debug_LCD_Interface)(char *debug_buf, unsigned int buf_len);
 }DEBUG_LCD_INFO;
 
-/* debugµ÷ÊÔ×¢²áĞÅÏ¢ */
+/* debugè°ƒè¯•æ³¨å†Œä¿¡æ¯ */
 typedef struct {
 	unsigned char 		InterfaceType;
 	DEBUG_UART_INFO		*Uart;
@@ -94,20 +94,20 @@ typedef struct {
 /******************************************* Func *******************************************/
 
 /********************************************************************************************/
-/*	º¯ÊıÃû:Debug_Msg 																			*/
-/*	Ãè	Êö:µ÷ÊÔĞÅÏ¢Êä³ö		 																	*/
-/*	²Î	Êı:[in]swit:µ÷ÊÔÊä³ö¿ª¹Ø																	*/
-/*		   [in]data:µ÷ÊÔÊä³öĞÅÏ¢																	*/
-/*	·µ»ØÖµ:ÎŞ																					*/
+/*	å‡½æ•°å:Debug_Msg 																			*/
+/*	æ	è¿°:è°ƒè¯•ä¿¡æ¯è¾“å‡º		 																	*/
+/*	å‚	æ•°:[in]swit:è°ƒè¯•è¾“å‡ºå¼€å…³																	*/
+/*		   [in]data:è°ƒè¯•è¾“å‡ºä¿¡æ¯																	*/
+/*	è¿”å›å€¼:æ— 																					*/
 /********************************************************************************************/
 void Debug_Msg(char *data);
 
 /********************************************************************************************/
-/*	º¯ÊıÃû:Debug_Init 																			*/
-/*	Ãè	Êö:µ÷ÊÔ×¢²áĞÅÏ¢»ØÊÕ½Ó¿Ú	 																	*/
-/*	²Î	Êı:[in]info:µ÷ÊÔ½Ó¿Ú×¢²áĞÅÏ¢																	*/
-/*	·µ»ØÖµ:×¢²á³É¹¦µÄ½Ó¿Ú,bit[0]-¿ØÖÆÌ¨ bit[1]-´®¿Ú bit[2]-ÍøÂç												*/
-/*			bit[3]-ÈÕÖ¾ÎÄ¼ş bit[4]-LCDÆÁÍ¨µÀ														*/
+/*	å‡½æ•°å:Debug_Init 																			*/
+/*	æ	è¿°:è°ƒè¯•æ³¨å†Œä¿¡æ¯å›æ”¶æ¥å£	 																	*/
+/*	å‚	æ•°:[in]info:è°ƒè¯•æ¥å£æ³¨å†Œä¿¡æ¯																	*/
+/*	è¿”å›å€¼:æ³¨å†ŒæˆåŠŸçš„æ¥å£,bit[0]-æ§åˆ¶å° bit[1]-ä¸²å£ bit[2]-ç½‘ç»œ												*/
+/*			bit[3]-æ—¥å¿—æ–‡ä»¶ bit[4]-LCDå±é€šé“														*/
 /********************************************************************************************/
 char Debug_Init(DEBUG_INFO *info);
 
