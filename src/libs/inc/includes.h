@@ -5,6 +5,12 @@
 #include <string.h>
 #include <unistd.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
 #ifndef bool
 #define bool	char
 #endif
@@ -26,5 +32,9 @@ enum {
 	DATA_TYPE_MASK_NET_SERVER,
 	DATA_TYPE_MASK_NET_CONNECT,
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

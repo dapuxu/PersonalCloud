@@ -1,8 +1,13 @@
 #ifndef __LIB_NET_H__
 #define __LIB_NET_H__
-
 #include <pthread.h>
 #include "lib_list.h"
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 
 typedef struct {
 	int fd;
@@ -52,5 +57,8 @@ signed char Net_Creat_Server(LIB_NET_SERVER_T *server);
 ********************************************************************************************************************/
 void Net_Delect_Server(LIB_NET_SERVER_T *server);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif

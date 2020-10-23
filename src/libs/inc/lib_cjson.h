@@ -64,25 +64,25 @@ extern void cJSON_InitHooks(cJSON_Hooks* hooks);
 
 
 /* Supply a block of JSON, and this returns a cJSON object you can interrogate. Call cJSON_Delete when finished. */
-extern cJSON *cJSON_Parse(const char *value);
+extern cJSON *cJSON_Parse(const char *value);//从 给定的json字符串中得到cjson对象
 /* Render a cJSON entity to text for transfer/storage. Free the char* when finished. */
-extern char  *cJSON_Print(cJSON *item);
+extern char  *cJSON_Print(cJSON *item);//从cjson对象中获取有格式的json对象
 /* Render a cJSON entity to text for transfer/storage without any formatting. Free the char* when finished. */
-extern char  *cJSON_PrintUnformatted(cJSON *item);
+extern char  *cJSON_PrintUnformatted(cJSON *item);//从cjson对象中获取无格式的json对象
 /* Render a cJSON entity to text using a buffered strategy. prebuffer is a guess at the final size. guessing well reduces reallocation. fmt=0 gives unformatted, =1 gives formatted */
 extern char *cJSON_PrintBuffered(cJSON *item,int prebuffer,int fmt);
 /* Delete a cJSON entity and all subentities. */
-extern void   cJSON_Delete(cJSON *c);
+extern void   cJSON_Delete(cJSON *c);//删除cjson对象，释放链表占用的内存空间
 
 /* Returns the number of items in an array (or object). */
-extern int	  cJSON_GetArraySize(cJSON *array);
+extern int	  cJSON_GetArraySize(cJSON *array);//获取cjson对象数组成员的个数
 /* Retrieve item number "item" from array "array". Returns NULL if unsuccessful. */
-extern cJSON *cJSON_GetArrayItem(cJSON *array,int item);
+extern cJSON *cJSON_GetArrayItem(cJSON *array,int item);//根据下标获取cjosn对象数组中的对象
 /* Get item "string" from object. Case insensitive. */
-extern cJSON *cJSON_GetObjectItem(cJSON *object,const char *string);
+extern cJSON *cJSON_GetObjectItem(cJSON *object,const char *string);//根据键获取对应的值（cjson对象）
 
 /* For analysing failed parses. This returns a pointer to the parse error. You'll probably need to look a few chars back to make sense of it. Defined when cJSON_Parse() returns 0. 0 when cJSON_Parse() succeeds. */
-extern const char *cJSON_GetErrorPtr(void);
+extern const char *cJSON_GetErrorPtr(void);//获取错误字符串
 	
 /* These calls create a cJSON item of the appropriate type. */
 extern cJSON *cJSON_CreateNull(void);

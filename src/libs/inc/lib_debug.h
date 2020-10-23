@@ -2,6 +2,12 @@
 #define __LIB_DEBUG_H__
 #include <stdio.h>
 #include "includes.h"
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /******************************************* Enum ********************************************/
 /* debug调试输出方式 */
 typedef enum {
@@ -128,5 +134,9 @@ unsigned short GetCurrentMsec(void);
 #else
 #define DBG_PRINT(module, format, ...)  {if(module == 1 && dbg_str != NULL) {sprintf(dbg_str, "[%s:%d]" format, __FUNCTION__, __LINE__, ##__VA_ARGS__);\
 	Debug_Msg(dbg_str);}}
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 #endif

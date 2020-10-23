@@ -1,0 +1,13 @@
+{
+	"user_conf":"config/user_config",
+    "server": {
+        "server_listen": {
+            "port": 9200,
+            "connect_max":20
+        },
+        "server_video": {
+            "port": "9300",
+            "connect_max":20
+        }
+    }
+}
