@@ -10,7 +10,6 @@ extern "C"
 {
 #endif
 
-
 #ifndef bool
 #define bool	char
 #endif
@@ -31,6 +30,8 @@ enum {
 	DATA_TYPE_MASK_NONE = 0,
 	DATA_TYPE_MASK_NET_SERVER,
 	DATA_TYPE_MASK_NET_CONNECT,
+	DATA_TYPE_MASK_NET_EPOLL,
+	DATA_TYPE_MASK_NET_SHAREMEM,
 };
 
 #ifdef __cplusplus

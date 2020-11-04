@@ -1,0 +1,39 @@
+
+--------------------------------------------------------------
+| 0xAA | 0xFF | Type | SubType | DataLen | Data ...... | CRC | 
+--------------------------------------------------------------
+Describe:
+Head[0]:0xAA
+Head[1]:0xFF
+Type:It takes up one byte
+SubType:It takes up one byte
+DataLen:It takes up two byte, it represents the length of the data.
+Data:It takes up DataLen byte
+CRC:It takes up one byte
+
+
+Type
+-------------------------------
+| 0x01 | User protocol
+-------------------------------
+| 0x02 | Sync protocol
+-------------------------------
+| 0x03 | Browse protocol
+-------------------------------
+| 0x03 | Player protocol
+-------------------------------
+
+
+SubType
+-------------------------------
+| 0x01 | register
+-------------------------------
+| 0x02 | login
+-------------------------------
+| 0x01 | photo
+-------------------------------
+| 0x02 | video
+-------------------------------
+| 0x03 | file
+-------------------------------
+

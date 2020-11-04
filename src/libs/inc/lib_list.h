@@ -12,6 +12,7 @@ typedef struct lib_list{
 	struct lib_list *prev;
 	unsigned char data_mask;
 	unsigned int datalen;
+	char flag_mount;
 	void *data;
 }LIST_T;
 
@@ -24,7 +25,7 @@ typedef struct lib_list{
 **		   [in]mask:数据类型掩码
 **	返回值:链表头节点
 ********************************************************************************************************************/
-LIST_T *List_Add(LIST_T **head, void *data, int datalen, char mask);
+LIST_T *List_Add(LIST_T **head, void *data, int datalen, char mask, char flag_mount);
 
 /*******************************************************************************************************************
 **	函数名:List_Get_Head

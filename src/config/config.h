@@ -1,5 +1,6 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
+#include "pc_includes.h"
 #include "lib_file.h"
 
 typedef struct {

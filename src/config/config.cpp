@@ -28,10 +28,15 @@ Conf::~Conf()
 ********************************************************************************************************************/
 char Conf::Conf_Init(char *path)
 {
+	int ret;
 	if (path == NULL || strlen(path) >= sizeof(conf.file_path))
 		return 0;
 
-	return File_Init(&conf, path);
+	memset((void *)&conf, 0x0, sizeof(FILE_BLOCK_T));
+	DBG_PRINT(DBG_MODULE_TEST, "path:%s\n", path);
+	ret = File_Init(&conf, path);
+	DBG_PRINT(DBG_MODULE_TEST, "ret:%d conf:%s\n", ret, conf.file_path);
+	return ret;
 }
 
 /*******************************************************************************************************************
@@ -48,8 +53,10 @@ char Conf::Conf_Get_Param(CONF_PARAM_T *param, char *buf, unsigned char buflen)
     cJSON * item = NULL;
 	int i = 0, size = 0;
 	char *temp = NULL;
-	
+
 	if (NULL == param || NULL == buf || 0 >= buflen || 0 == File_Access(conf.file_path)) {
+		DBG_PRINT(DBG_MODULE_ERROR, "param:%s, buf:%s, buflen:%d, file:%s\n", param?"Exist":"NULL", param?"Exist":"NULL", buflen, File_Access(conf.file_path)?"Exist":"NULL");
+		DBG_PRINT(DBG_MODULE_TEST, "file_path:%s\n", conf.file_path);
 		return 0;
 	}
 

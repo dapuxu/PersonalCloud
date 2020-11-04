@@ -2,7 +2,6 @@
 #include <iostream>
 #include "lib_debug.h"
 
-
 using namespace std;
 
 Server::Server()
@@ -23,23 +22,6 @@ Server::~Server()
 }
 
 /*******************************************************************************************************************
-**	函数名:Thread_Net_Server
-**	描	述:服务器线程
-**	参	数:[in]server:服务器参数
-**	返回值:无
-********************************************************************************************************************/
-static void *Thread_Net_Server(void* server)
-{
-
-	if (NULL == server)
-		return NULL;
-
-	Net_Creat_Server((LIB_NET_SERVER_T *)server);
-	DBG_PRINT(1, "Exit server\n");
-	return NULL;
-}
-
-/*******************************************************************************************************************
 **	函数名:Creat_Server
 **	描	述:创建服务器
 **	参	数:[in]port:端口号
@@ -49,16 +31,11 @@ static void *Thread_Net_Server(void* server)
 ********************************************************************************************************************/
 int Server::Creat_Server(unsigned short port, unsigned short conn_max, void (*Server_Data_Handle)(LIB_NET_CONNECT_T *, char *, unsigned short))
 {
-	pthread_t DemoThreadServer;
-
 	net.port = port;
 	net.connect_max = conn_max;
 	net.Net_Server_Data_Handle = Server_Data_Handle;
 
-	if (pthread_create(&DemoThreadServer, NULL, Thread_Net_Server, (void *)(&net)) != 0) {
-        DBG_PRINT(1, "pthread_create Demo_Net_Server_Thread failed.\n");
-		return 0;
-    }
+	Net_Creat_Server(&net);
 	return 1;
 }
 
